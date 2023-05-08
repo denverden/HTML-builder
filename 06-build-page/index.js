@@ -42,7 +42,6 @@ const copyFolder = async (startFolder, destinationFolder) => {
 };
 
 const writeFile = (fileName) => {
-  const WRITE_STREAM = FS.createWriteStream(PATH.join(DESTINATION_FOLDER, "style.css"), "utf-8");
   const READ_STREAM = FS.createReadStream(fileName, "utf-8");
 
   READ_STREAM.on("data", (chunk) => WRITE_STREAM.write(chunk));
@@ -66,3 +65,5 @@ const infoFolder = async (nameFolder) => {
   await infoFolder(STYLES_FOLDER);
   await buildHTML("template.html");
 })();
+
+const WRITE_STREAM = FS.createWriteStream(PATH.join(DESTINATION_FOLDER, "style.css"), "utf-8");
