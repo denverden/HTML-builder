@@ -4,6 +4,7 @@ const FS_PROMISES = require("fs/promises");
 const ASSETS_FOLDER = PATH.join(__dirname, "assets");
 const STYLES_FOLDER = PATH.join(__dirname, "styles");
 const DESTINATION_FOLDER = PATH.join(__dirname, "project-dist");
+let WRITE_STREAM;
 
 const buildHTML = async (templateSrc) => {
   let template = await FS_PROMISES.readFile(PATH.join(__dirname, templateSrc), "utf8");
@@ -61,9 +62,10 @@ const infoFolder = async (nameFolder) => {
 
 (async () => {
   await FS_PROMISES.mkdir(DESTINATION_FOLDER, { recursive: true });
+
+  WRITE_STREAM = FS.createWriteStream(PATH.join(DESTINATION_FOLDER, "style.css"), "utf-8");
+
   await copyFolder(ASSETS_FOLDER, PATH.join(DESTINATION_FOLDER, "assets"));
   await infoFolder(STYLES_FOLDER);
   await buildHTML("template.html");
 })();
-
-const WRITE_STREAM = FS.createWriteStream(PATH.join(DESTINATION_FOLDER, "style.css"), "utf-8");
